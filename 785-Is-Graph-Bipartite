@@ -1,0 +1,45 @@
+class Solution {
+public:
+    vector<vector<int>> adj;
+    vector<pair<int, int>> vis;
+    bool dfs(int n, int c)
+    {
+        vis[n].first = 1;
+        vis[n].second = c;
+        int res = true;
+        
+        for(auto x : adj[n])
+        {
+            if(!vis[x].first)
+            {
+                res &= dfs(x, !c);
+            }
+            else if(vis[x].first && vis[x].second == vis[n].second)
+                return false;
+        }
+
+        return res;
+    }
+    bool isBipartite(vector<vector<int>>& g) {
+        int n = g.size();
+        adj.resize(n);
+        vis.resize(n);
+
+        for(int i = 0; i < g.size(); i++)
+        {
+            for(int j = 0; j < g[i].size(); j++)
+            {
+                adj[i].push_back(g[i][j]);
+            }
+        }
+
+        bool ans = true;
+        for(int i = 0; i < n; i++)
+        {
+            if(!vis[i].first)
+                ans &= dfs(i, 0);
+        }
+
+        return ans;
+    }
+};
