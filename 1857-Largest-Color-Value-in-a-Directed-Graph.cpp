@@ -35,6 +35,7 @@ public:
 
                 for(int j = 0; j < 26; j++)
                 {
+                    //we max because we need the max color from each path leading to the current node
                     co[x][j] = max(co[x][j], co[u][j]);
                 }
             }
